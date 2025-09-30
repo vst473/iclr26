@@ -15,7 +15,7 @@ deepseek_enhance_instruct: |
   8. Ensure the output is valid JSON (escape quotes, no trailing commas). The assistant response will be programmatically consumed — validity is required.
   
   Quality & style directives:
-  • Produce a natural, fluent, idiomatic translation in `Indian {0} language` that reads as if originally written in that language.
+  • Produce a natural, fluent, idiomatic translation in `Indian {4} language` that reads as if originally written in that language.
   • Fix MT artefacts: garbled words, broken spacing, wrong script mixing, incorrect word-form choices, punctuation mistakes.
   • Keep register/tone consistent with the English source (formal/informal/technical).
   • Keep length roughly proportional unless natural phrasing requires modest adjustment.
@@ -29,18 +29,18 @@ deepseek_enhance_instruct: |
   • Ensure the JSON is parseable by a standard JSON parser.
   
   <｜User｜>Input:
-  TARGET_LANG: Indian {0} language        
-  ORIGINAL_QUESTION: {1}
-  ORIGINAL_CHOICES: {2}  
-  Machine_translated_QUESTION: {3}        
-  Machine_translated_CHOICES: {4}          
+  TARGET_LANG: Indian {4} language        
+  ORIGINAL_QUESTION: {0}
+  ORIGINAL_CHOICES: {1}  
+  Machine_translated_QUESTION: {2}        
+  Machine_translated_CHOICES: {3}          
   
   Task:
-  Using MT_QUESTION / MT_CHOICES as the primary source, produce a polished, natural final translation in Indian {0} language. If the MT text is missing or clearly broken for any element, translate that element from ORIGINAL_* instead. Obey the Hard rules in the System prompt. Return only a single JSON object with "question" and "choices".
+  Using MT_QUESTION / MT_CHOICES as the primary source, produce a polished, natural final translation in Indian {4} language. If the MT text is missing or clearly broken for any element, translate that element from ORIGINAL_* instead. Obey the Hard rules in the System prompt. Return only a single JSON object with "question" and "choices".
   
   output format:
   {{
-    "question": "final polished translation of the question in Indian {{0}} language",
+    "question": "final polished translation of the question in Indian {{4}} language",
     "choices": [
       "final polished translation of choice 1",
       "final polished translation of choice 2",
