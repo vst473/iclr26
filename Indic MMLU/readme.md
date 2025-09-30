@@ -159,13 +159,19 @@ bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
 
 ---
 
-## Summary of human (teacher) ratings
+### 📝 Summary of LLM-as-Judge Ratings
 
-* **What we measured:** language quality, math correctness, coherence, and linguistic suitability.
-* **How to read the table:** higher scores (closer to the upper bound used during rating) indicate better perceived translation/enhancement quality and correctness.
-* **Notable:** Most languages show high average scores (>8.9) indicating strong quality after enhancement. A few languages display outlier lower ratings suggesting targeted improvement is still required.
+To evaluate translation quality systematically, we employed **LLMs as judges**, operating under three carefully designed expert personas:
 
-* Ratings cover **language quality, math correctness, coherence, and linguistic aspects**.
+* **Math Expert Persona** → Rated mathematical correctness, terminology, and conceptual fidelity.
+* **Linguistic Expert Persona** → Assessed fluency, grammar, idiomatic usage, and naturalness of the translation.
+* **Coherence Expert Persona** → Evaluated semantic alignment, logical flow, and clarity between English and the target language.
+
+**What we measured:**
+
+* Language quality, fluency, and linguistic suitability.
+* Mathematical correctness and fidelity of technical content.
+* Overall coherence and semantic alignment with the English source.
 
 | Language  | Avg Maths Rate | Avg Coherence Rate | Avg Linguist Rate | Total Records |
 |-----------|----------------|--------------------|-------------------|---------------|
@@ -182,6 +188,12 @@ bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
 | Tamil     | 9.047856       | 9.042943           | 8.071144          | 14042         |
 | Malayalam | 9.134952       | 8.998148           | 7.956488          | 14042         |
 | Maithili  | 9.263282       | 9.118146           | 8.218772          | 14042         |
+
+**How to read the table:**
+
+* Ratings are on a **1–10 scale**, where higher scores reflect better translation and enhancement quality.
+* Most languages achieved **consistently high averages (>8.9)**, showing strong quality after enhancement.
+* A few outliers suggest areas where further targeted refinement may be beneficial.
 
 ---
 
