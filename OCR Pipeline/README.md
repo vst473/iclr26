@@ -1,117 +1,200 @@
- ### Downloading and Reproducibility Links Coming within 24 hours.
+# Multi-Stage OCR Processing and Validation Pipeline
 
----
-# Indic OCR Pipeline
-
-> A robust multi-stage pipeline for optical character recognition of low-resource Indian languages, designed to handle complex scripts and degraded documents.
-
----
-
-## Overview
-
-Indic languages face significant digital scarcity, particularly low-resource languages like Maithili and Sindhi. We developed a comprehensive OCR pipeline to process **5–6 million pages** from print materials and scanned books, converting inaccessible texts into machine-readable format.
-
-### Key Challenges
-
-- **Poor scan quality** — 37% of materials exhibited faded ink, irregular printing, and evolving orthographies
-- **Complex scripts** — Ligatures, conjunct consonants, and diacritics across Devanagari, Bengali, Tamil, Telugu, and more
-- **Layout variation** — Multi-column formats, newspapers, manuscripts, tables, and figures
+**Input:** Digitized or undigitized document images (low-quality, noisy, or artifact-rich)
+**Output:** Validated OCR text with associated confidence and quality labels
 
 ---
 
-## Pipeline Architecture
+## Step 1: Pre-Processing
 
-![OCR Pipeline](/readme-resources/ocr-pipeline.png)
+### 1.1 Error Identification using VLMs
 
-### 1. Pre-Processing
+**Model:** Lightweight VLM (e.g., Qwen-VL-7B)
 
-- Denoising, binarization, and contrast enhancement
-- Super-resolution (SRGAN) for readability improvement
-- VLM-based artifact detection (orientation, blur, stamps, illustrations)
+**Task:** Detect artifacts, orientation, and readability issues in scanned pages.
 
-**Example prompt:**
+**Prompt (VLM):**
+
+```text
+You are a document analysis system.  
+Given this scanned page, identify the following issues:  
+1. Page orientation (normal, rotated, upside-down).  
+2. Presence of noise, blur, or watermarks.  
+3. Regions of non-text (stamps, illustrations, smudges).  
+4. Overall readability score (High, Medium, Low).  
+
+Return the issues as a structured JSON object.
 ```
-You are a document analysis system. Identify:
-1. Orientation (normal, rotated, upside-down)
-2. Noise, blur, watermarks
-3. Non-text regions
-4. Overall readability score
-Return structured JSON.
-```
-
-### 2. OCR Generation
-
-- Ensemble of script-specific OCR models
-- Generalist VLMs for layout interpretation
-- Human-in-the-loop calibration on sampled pages
-
-**Layout detection prompt:**
-```
-You are an OCR layout assistant. Output:
-1. Document layout (columns, tables, figures)
-2. Logical reading order
-3. Script/language hints
-Return as structured JSON.
-```
-
-### 3. Post-OCR Enhancement
-
-- Rule-based normalization (dictionary checks, Unicode repair, spacing fixes)
-- LLM-based postcorrection for grammar and semantic alignment
-
-### 4. Validation
-
-- hOCR reconstruction with style transfer
-- Embedding similarity between original and reconstructed images
-- Reasoning-based validation with VLMs
-- Trajectory comparison using LLMs for semantic similarity scoring
-- Human expert review for flagged cases
 
 ---
 
-## ISOB: Indic Synthetic OCR Benchmark
+### 1.2 Artifact Removal & Enhancement
 
-Due to copyright constraints on scanned materials, we created **ISOB-Small**, a synthetic benchmark covering **22 Indian languages**.
+**Techniques:**
 
-### Features
+* Orientation correction, noise/blur removal
+* Super-Resolution (SRGAN) for low-resolution pages
+* Qwen Image Edit for severe degradation
 
-- **110 synthetic pages** with diverse layouts and degradations
-- Multi-column layouts, tables, equations, blur, shadows, watermarks, folds, font variation
-- Stress-tests for ligatures, conjunct consonants, and diacritics
+**Prompt (Qwen Image Edit):**
 
-### Generation Pipeline
+```text
+You are an image enhancement system.  
+Task: Improve readability of this scanned document.  
 
-1. **Seed Corpus** — Initialize with OCR'd hOCR pages
-2. **Hard Page Selection** — Identify difficult pages using confidence scores + VLM classifiers
-3. **Language Sampling** — Random selection of 3–10 languages
-4. **Artifact Taxonomy** — Extract complex layouts via LLMs
-5. **Synthetic Augmentation** — Add multilingual + artifact-rich structures
-6. **Visual Rendering** — Convert to images/PDFs
-7. **Style Transformation** — Simulate manuscript/book styles
-8. **Degradation** — Apply noise, blur, distortions
-9. **Annotation** — Store with ground truth hOCR, language tags, metadata
+Instructions:  
+- Sharpen text edges.  
+- Remove background noise and smudges.  
+- Correct orientation if tilted.  
+- Increase resolution while preserving textual structure.  
+
+Return the enhanced page without altering the content.
+```
 
 ---
 
-## Folder Structure
+## Step 2: OCR Generation with Human-in-the-Loop
 
+**Approach:**
+
+* Ensemble of specialist OCR models (per script/language)
+* Generalist VLMs for layout interpretation
+* Periodic human calibration on sampled pages
+
+**Prompt (Generalist VLM for layout):**
+
+```text
+You are an OCR layout assistant.  
+Given this scanned page, output:  
+1. The document layout (columns, tables, figures).  
+2. Logical reading order of text blocks.  
+3. Any script/language hints detected.  
+
+Return in structured JSON to assist OCR alignment.
 ```
-experiments/
- ├── data_curation/
- │    ├── configs/
- │    │    └── curator.yaml
- │    ├── scripts/
- │    │    ├── run_curator.sh
- │    │    ├── download_raw.sh
- │    ├── notebooks/
- │    │    └── quality_checks.ipynb
- │    └── README.md
- ├── pretraining/
- │    ├── train_curated.sh
- │    ├── train_noncurated.sh
- │    └── configs/
- │         └── param_ablation.yaml
+
+---
+
+## Step 3: Post-OCR Quality Enhancement
+
+**Techniques:**
+
+* Rule-based filters (dictionary constraints, script normalization)
+* LLM-based post-correction for grammar, consistency, semantic alignment
+
+**Prompt (LLM Post-Correction):**
+
+```text
+You are an expert in correcting OCR output for printed text.  
+The OCR output may contain:
+- Misrecognized characters (e.g., language-specific confusions)
+- Broken, merged, or incomplete words
+- Incorrect line or paragraph order due to multi-column layouts
+- Stray punctuation, symbols, or other OCR artifacts
+
+Your task is to:
+1. Correct all character-level and word-level OCR errors.  
+2. Restore proper reading order and logical sentence/paragraph flow.  
+3. Remove meaningless OCR noise while preserving all valid content.  
+4. Keep the text in the original script.  
+5. Output only clean, coherent text in proper writing.
+
+Now correct this OCR output accordingly:
 ```
+
+---
+
+## Step 4: Validation & Consistency Checking
+
+### 4.1 Reconstruction with hOCR + Style Transfer
+
+**Prompt (Qwen Image Edit - Style Transfer):**
+
+```text
+You are an image reconstruction system.  
+Task: Using the provided hOCR, generate an image that visually resembles the original scanned document.  
+
+Constraints:  
+- Preserve layout, fonts, and formatting.  
+- Apply natural degradation styles common in manuscripts (faded ink, paper texture).  
+
+Return the synthetic page.
+```
+
+---
+
+### 4.2 Embedding Similarity Check
+
+* Compute cosine similarity between embeddings of original vs reconstructed images
+
+---
+
+### 4.3 Reasoning-Based Validation with VLMs
+
+**Prompt (Reasoning VLM):**
+
+```text
+You are a reasoning OCR evaluator.  
+Given this scanned page, describe step by step:  
+1. What the page contains (title, paragraphs, tables, etc.).  
+2. The key semantic content (entities, topics, structure).  
+
+Return a reasoning trajectory of what you understand from this page.
+```
+
+---
+
+### 4.4 Trajectory Comparison with LLMs
+
+**Prompt (Text LLM Comparison):**
+
+```text
+You are a similarity evaluator.  
+Input: Two reasoning trajectories of the same page (original vs reconstructed).  
+
+Task:  
+1. Compare their semantic overlap.  
+2. Assign a similarity score (0–100).  
+3. Provide justification for the score.  
+4. Bucket the result into {Good, Acceptable, Bad}.  
+
+Return output as JSON: {score, justification, bucket}.
+```
+
+---
+
+### 4.5 Score-Reason Consistency Check
+
+**Prompt (Consistency Check LLM):**
+
+```text
+You are a validation assistant.  
+Input: {score, justification} from similarity evaluator.  
+
+Task: Verify if the justification logically supports the score.  
+Return either "Consistent" or "Inconsistent".
+```
+
+---
+
+## Step 5: Human Expert Review and Manual Post-Correction
+
+* Pages flagged as low similarity or inconsistent are routed to human linguists for manual validation.
+
+---
+
+**Final Result:**
+An orchestrated OCR pipeline integrating:
+
+* Artifact detection
+* Super-resolution
+* Ensemble OCR
+* Post-correction
+* Reconstruction-based validation
+* Reasoning-VLM alignment
+* Human-in-the-loop oversight
+
+All model interactions are guided by instruction-grade prompts for reproducibility.
 
 ---
 
@@ -175,37 +258,3 @@ Traditional metrics are insufficient post-enhancement. Our framework includes:
 - Specialist OCR models outperform after preprocessing + postcorrection
 - Postcorrection improves CER by ~50% and WER by ~40% on average
 - Pretraining on processed OCR text yields smoother convergence vs. raw OCR
-
----
-
-## Dataset Release
-
-**ISOB-Small** (22 languages, 110 pages) will be released publicly for research purposes.
-
-Includes:
-- Synthetic generation recipes
-- Augmentation scripts
-- Ground truth annotations
-- Reproducibility documentation
-
-Future releases planned for **Indic-Real-OCR** and **Indic-Synthetic-OCR** variants.
-
-
-| Model                                   | isob CER  | isob WER  | isob PI-WER | isob Char3gram-F1 |
-|----------------------------------------|-----------|-----------|-------------|-----------------|
-| dotsOCR2                                | 0.73919   | 0.86158   | 0.72613     | 0.30264         |
-| Surya                                   | 0.88765   | 0.89821   | 0.88141     | 0.14812         |
-
-
----
-
-## Key Insights
-
-1. OCR quality depends critically on data availability and processing pipelines
-2. Iterative refinement (preprocessing → OCR → postcorrection → validation) is essential
-3. Synthetic benchmarks fill critical gaps in Indic OCR research
-4. Human-in-the-loop validation ensures quality for low-resource scenarios
-
----
-
-*This work addresses the digital divide for low-resource Indian languages through innovative OCR techniques and reproducible benchmarking.*
