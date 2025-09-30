@@ -1,20 +1,33 @@
+---
+
 # Indic MMLU — Benchmarking Open-Source LLMs on Indian Languages
 
 **Short description:**
-A rigorously prepared, multi-language adaptation of the CAIS/MMLU test set, translated and enhanced for 22 Indic languages to evaluate open-source LLMs’ real-world understanding of Indian languages. This README explains *what* we built, *why* it matters, *how* it was produced, and *how* to reproduce the evaluation.
+A rigorously prepared, multi-language adaptation of the CAIS/MMLU test set, translated and enhanced for **22 Indic languages**, designed to evaluate open-source LLMs’ real-world ability to understand Indian languages.
+We additionally conducted large-scale **evaluation on 16 of these Indic languages (plus English)**, producing detailed accuracy reports and per-language visualizations.
 
 ---
 
-## Why this dataset exists (the purpose — stated clearly)
+## Why this dataset exists
 
-Large language models are frequently trained and benchmarked on English datasets. To fairly evaluate whether an open-source model genuinely understands an Indic language (and not just mirror English behavior), we translated the widely used CAIS/MMLU benchmark into Indian languages and improved translation quality with controlled enhancement steps.
+Large language models are often benchmarked only on English datasets, which leaves open the question of whether they can *actually* understand Indian languages beyond surface-level translation.
 
-A model whose score on an Indic version is close to its English MMLU score demonstrates *robust language understanding* (not just brittle translation or token mapping). This benchmark therefore helps:
+The **Indic MMLU dataset** bridges this gap by:
 
-* Measure cross-lingual generalization of LLMs.
-* Identify language-specific weaknesses (math, domain knowledge, phrasing).
-* Guide model development and fine-tuning for Indian languages.
-* Provide a reproducible dataset and evaluation pipeline for the community.
+* Translating the widely used **CAIS/MMLU benchmark** into **22 Indian languages**.
+* Enhancing those translations with high-quality open-source LLM refinement.
+* Providing a reproducible evaluation setup for **measuring open-source models across 16 Indic languages (evaluated subset)**.
+
+If a model’s score on an Indic version is close to its score on the original English MMLU, it indicates **genuine language understanding** and strong cross-lingual generalization.
+
+---
+
+## Coverage
+
+* **Dataset scope:** 22 Indic languages (full benchmark availability).
+* **Evaluation scope:** 16 Indic languages + English (practically evaluated with ~24 open-source LLMs).
+
+This separation ensures the dataset is **broad and inclusive**, while evaluation focuses on the languages with the most immediate support and resources.
 
 ---
 
@@ -47,7 +60,7 @@ A model whose score on an Indic version is close to its English MMLU score demon
 
 ---
 
-## Pseudo-algorithm (concise)
+## Pseudo-algorithm 
 
 ```
 For each language in target_languages:
@@ -134,7 +147,7 @@ bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
 
 ---
 
-## Summary of human (teacher) ratings — interpretation
+## Summary of human (teacher) ratings
 
 * **What we measured:** language quality, math correctness, coherence, and linguistic suitability.
 * **How to read the table:** higher scores (closer to the upper bound used during rating) indicate better perceived translation/enhancement quality and correctness.
@@ -160,7 +173,7 @@ bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
 
 ---
 
-## Cosine similarity — interpretation
+## Cosine similarity 
 
 * Cosine similarity gives a quick automated signal of semantic closeness between the translated/enhanced items and their English originals.
 * Typical mean similarities range from ~0.76 to 0.85 across languages; higher means closer embeddings (better semantic preservation).
@@ -186,13 +199,26 @@ bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
 
 ---
 
-## Model evaluation methodology (concise)
+## Model Evaluation Methodology
 
-1. **Environment:** Docker image `vllm/vllm-openai:latest` to ensure a reproducible inference environment.
-2. **Framework:** `lm-eval` for standardized metrics and consistent evaluation across models.
-3. **Metrics:** per-language accuracy, top-k model rankings per language, and aggregate averages.
-4. **Visualization:** radar plots per language on 26 opensource models.
+We evaluated **~24 open-source LLMs** across **16 Indic languages** (subset of the 22 total dataset languages) plus English, using the Indic MMLU benchmark.
 
+Workflow:
+
+1. **Environment Setup:** Dockerized `vllm/vllm-openai` for reproducibility.
+2. **Framework:** `lm-eval` for standardized evaluation.
+3. **Metrics:** per-language accuracy, top-3 rankings per language, aggregate averages.
+4. **Visualization:** radar plots for each language and comparative top-3 plots.
+
+---
+
+## Important Note
+
+* **Indic MMLU Dataset = 22 Indian languages**
+* **Current Model Evaluation = 16 Indian languages + English**
+* Work is ongoing to expand the evaluation to cover all 22 languages.
+
+---
 ### 📊 Indic MMLU Results 
 
 | <div align="center">![Assamese](assets/assamese.png)<br/>*Assamese*</div> | <div align="center">![Bengali](assets/bengali.png)<br/>*Bengali*</div> |
