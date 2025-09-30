@@ -140,9 +140,6 @@ bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
 * **How to read the table:** higher scores (closer to the upper bound used during rating) indicate better perceived translation/enhancement quality and correctness.
 * **Notable:** Most languages show high average scores (>8.9) indicating strong quality after enhancement. A few languages display outlier lower ratings suggesting targeted improvement is still required.
 
-> *Full numerical table is included with the release artifacts.*
-> (If you want, we can add a compact CSV or markdown table in the repo root for quick reference.)
-
 * Ratings cover **language quality, math correctness, coherence, and linguistic aspects**.
 
 | Language  | Avg Maths Rate | Avg Coherence Rate | Avg Linguist Rate | Total Records |
