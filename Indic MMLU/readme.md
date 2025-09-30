@@ -141,9 +141,42 @@ Cosine similarity was calculated between the original English and enhanced/trans
 
 ## Model Evaluation
 
-Approximately **24 open-source models** were evaluated across Indic languages.
+### Model Evaluation Methodology
 
-* Model scores were reported across languages, highlighting the **best-performing models per language**.
+We evaluated ~24 open-source LLMs across 16 languages using the Indic MMLU benchmark. The evaluation workflow was as follows:
+
+1. **Environment Setup**
+
+   * Used the Docker image `vllm/vllm-openai:latest` for a reproducible inference environment.
+   * Installed the evaluation framework:
+
+     ```bash
+     pip install lm-eval
+     ```
+
+2. **Model Evaluation**
+   Each model was evaluated using the `lm-eval` framework on the Indic MMLU dataset:
+
+   ```bash
+   bash lm-eval-llm.sh <path_to_model_snapshot> <path_to_mmmlu_dataset>
+   ```
+
+   Example:
+
+   ```bash
+   bash lm-eval-llm.sh /workspace/bds/glm/hub/models--zai-org--GLM-4.5/snapshots/cbb2c7cfb52fa128a9660cb1a7a78e017899e115 /workspace/bds/mmmlu-benchmark/glm
+   ```
+
+3. **Metrics Computed**
+
+   * **Accuracy per Language**: Each model’s performance on the test set for each Indic language.
+   * **Top-Performing Models**: Identified by sorting model scores for each language.
+   * **Overall Performance**: Calculated as the average score across all languages.
+
+4. **Aggregation and Visualization**
+
+   * Scores were aggregated to generate language-wise summaries.
+   * **Radar plots** were created for each language to visually represent the relative performance of all evaluated models.
 
 ## Model Evaluation Table
 
