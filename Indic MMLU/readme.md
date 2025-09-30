@@ -195,15 +195,16 @@ bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
 
 ### 📊 Indic MMLU Results 
 
-| ![Assamese](assets/assamese.png) | ![Bengali](assets/bengali.png) |
-|----------------------------------|--------------------------------|
-| ![English](assets/English.png)   | ![Gujarati](assets/Gujrati.png) |
-| ![Hindi](assets/Hindi.png)       | ![Kannada](assets/kannada.png) |
-| ![Maithili](assets/maithili.png) | ![Malayalam](assets/Malayalam.png) |
-| ![Marathi](assets/marathi.png)   | ![Nepali](assets/Nepali.png)   |
-| ![Oriya](assets/oriya.png)       | ![Punjabi](assets/Punjabi.png) |
-| ![Sanskrit](assets/sanskrit.png) | ![Sindhi](assets/sindhi.png)   |
-| ![Tamil](assets/Tamil.png)       | ![Telugu](assets/Telugu.png)   |
+| <div align="center">![Assamese](assets/assamese.png)<br/>*Assamese*</div> | <div align="center">![Bengali](assets/bengali.png)<br/>*Bengali*</div> |
+|---------------------------------------------------------------------------|------------------------------------------------------------------------|
+| <div align="center">![English](assets/English.png)<br/>*English*</div>    | <div align="center">![Gujarati](assets/Gujrati.png)<br/>*Gujarati*</div> |
+| <div align="center">![Hindi](assets/Hindi.png)<br/>*Hindi*</div>          | <div align="center">![Kannada](assets/kannada.png)<br/>*Kannada*</div> |
+| <div align="center">![Maithili](assets/maithili.png)<br/>*Maithili*</div> | <div align="center">![Malayalam](assets/Malayalam.png)<br/>*Malayalam*</div> |
+| <div align="center">![Marathi](assets/marathi.png)<br/>*Marathi*</div>    | <div align="center">![Nepali](assets/Nepali.png)<br/>*Nepali*</div>   |
+| <div align="center">![Oriya](assets/oriya.png)<br/>*Oriya*</div>          | <div align="center">![Punjabi](assets/Punjabi.png)<br/>*Punjabi*</div> |
+| <div align="center">![Sanskrit](assets/sanskrit.png)<br/>*Sanskrit*</div> | <div align="center">![Sindhi](assets/sindhi.png)<br/>*Sindhi*</div>   |
+| <div align="center">![Tamil](assets/Tamil.png)<br/>*Tamil*</div>          | <div align="center">![Telugu](assets/Telugu.png)<br/>*Telugu*</div>   |
+
 
 ---
 
