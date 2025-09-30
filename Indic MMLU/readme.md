@@ -12,7 +12,7 @@ Large language models are often benchmarked only on English datasets, which leav
 
 The **Indic MMLU dataset** bridges this gap by:
 
-* Translating the widely used **CAIS/MMLU benchmark** into **22 Indian languages**.
+* Translating the widely used **[CAIS/MMLU](https://huggingface.co/datasets/cais/mmlu) benchmark** into **22 Indian languages**.
 * Enhancing those translations with high-quality open-source LLM refinement.
 * Providing a reproducible evaluation setup for **measuring open-source models across 16 Indic languages (evaluated subset)**.
 
