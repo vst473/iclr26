@@ -28,7 +28,7 @@ Future releases will expand to include:
 
 ---
 
-## Steps to Build the Benchmark
+## ISOB Construction Recipe
 
 ### Step 0: Initialize Seed Corpus
 
