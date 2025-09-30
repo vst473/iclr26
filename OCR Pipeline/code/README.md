@@ -2,7 +2,56 @@
 
 This repository provides a setup to run **asynchronous OCR inference** using Python inside a Docker container. The pipeline supports instruction-based prompts and high-concurrency inference via `vllm`.
 
+## Running Model Servers with Docker
+
+You can launch model servers using either **sglang** or **vLLM** inside Docker. Below are the generic command templates.
+
+### Run sglang Server
+
+```bash
+sudo docker run --gpus all --shm-size <SIZE> \
+  -v /path/to/cache:/root/.cache/huggingface/hub \
+  --ipc=host --network=host --privileged -it \
+  -e CUDA_VISIBLE_DEVICES=<GPU_IDS> \
+  <sglang_image>:latest \
+  bash -c "python3 -m pip install --upgrade huggingface_hub && \
+           huggingface-cli login --token <HF_TOKEN> && \
+           TORCH_CUDA_ARCH_LIST=<ARCH> python3 -m sglang.launch_server \
+               --model-path <MODEL_PATH> \
+               --device cuda \
+               --tp <TENSOR_PARALLEL> \
+               --dp <DATA_PARALLEL> \
+               --mem-fraction-static <MEM_FRACTION> \
+               --attention-backend <BACKEND> \
+               --enable-torch-compile \
+               --torch-compile-max-bs <MAX_BATCH> \
+               --host 0.0.0.0 \
+               --port <PORT> \
+               --enable-metrics"
+```
+
+OR
+
+### Run vLLM Server
+
+```bash
+sudo docker run --gpus all --shm-size <SIZE> \
+  -v /path/to/cache:/root/.cache/huggingface/hub \
+  --ipc=host --network=host --privileged -it \
+  -e CUDA_VISIBLE_DEVICES=<GPU_IDS> \
+  -e HF_TOKEN=<HF_TOKEN> \
+  <vllm_image>:latest \
+      --model <MODEL_PATH> \
+      --tensor-parallel-size <TENSOR_PARALLEL> \
+      --data-parallel-size <DATA_PARALLEL> \
+      --dtype <DTYPE> \
+      --max-model-len <MAX_LEN> \
+      --host 0.0.0.0 \
+      --port <PORT>
+```
+
 ---
+
 
 ## Run Docker Container
 
