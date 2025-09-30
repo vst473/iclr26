@@ -70,51 +70,42 @@ To complement the pseudo-code, the following flowchart provides a **visual overv
 
 ![Indic MMLU Pipeline](assets/indic-mmlu.png)
 
-# Pseudo-algorithm 
+# Translation Algorithm 
 
 ```
-### Multilingual Evaluation Pipeline
+Input:
+  original_mmlu
+  target_languages
+  instructions
 
-**Input:**
+For each language L in target_languages:
+    translated = translate(original_mmlu, tgt=L)
+    enhanced = enhance_using_llm(translated, instructions)
 
-* `original_mmlu`: The original dataset in English.
-* `target_languages`: List of languages for evaluation.
-* `instructions`: Guidelines for enhancement.
+    eng_emb = embed(original_mmlu)
+    trans_emb = embed(enhanced)
+    sim_scores = cosine_similarity(eng_emb, trans_emb)
 
-**Algorithm:**
+    llm_scores = LLM_as_Judge(original_mmlu, translated)
 
-1. **For each language `L` in `target_languages`:**
-   a. **Translation:**
+    consistency = consistency_check(sim_scores, llm_scores)
 
-   * `translated ← translate(original_mmlu, tgt=L)`
-     b. **Enhancement:**
-   * `enhanced ← enhance_using_llm(translated, instructions)`
-     c. **Embedding & Similarity:**
-   * `eng_emb ← embed(original_mmlu)`
-   * `trans_emb ← embed(enhanced)`
-   * `sim_scores ← cosine_similarity(eng_emb, trans_emb)`
-     d. **LLM-as-Judge Scoring:**
-   * `llm_scores ← LLM_as_Judge(original_mmlu, translated)`
-     e. **Consistency Check:**
-   * `consistency ← consistency_check(sim_scores, llm_scores)`
-   * If `consistency` is poor → flag for human evaluation
-   * Else → accept translation
-     f. **Human Rating (if flagged):**
-   * `human_ratings ← rate_sample(enhanced)`
+    If consistency is poor:
+        human_ratings = rate_sample(enhanced)
+    Else:
+        accept enhanced
 
-2. **Aggregate Results:**
+Aggregate all scores:
+    combine sim_scores, llm_scores, human_ratings
+    compute per-language model scores
 
-   * Combine LLM scores, similarity scores, and human ratings.
-   * Compute per-language performance metrics.
+Produce visualizations:
+    generate charts and plots for cross-language comparison
 
-3. **Visualization:**
+Output:
+    per-language evaluation scores
+    visualizations
 
-   * Generate visual summaries (e.g., bar charts, heatmaps) for cross-language comparison.
-
-**Output:**
-
-* Per-language evaluation scores.
-* Visualizations of translation quality and consistency.
 ```
 
 This visual representation makes it easier to understand how the **algorithmic steps, human evaluation, and automated checks** come together to ensure translation quality and dataset reliability.
