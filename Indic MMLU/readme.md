@@ -231,7 +231,7 @@ bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
 
 ## Visual assets & tables
 
-We include per-language radar plots and a consolidated results panel in `plots/`. The README in the repo contains thumbnails; click through for full-resolution visuals. If you want, I can add a two-column gallery layout for those images in the README for better presentation.
+We include per-language radar plots and a consolidated results panel in `plots/`. The README in the repo contains thumbnails; click through for full-resolution visuals. 
 
 ---
 
