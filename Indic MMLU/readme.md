@@ -151,6 +151,15 @@ The full table contains evaluation scores for ~24 models across 16 languages (in
 
 ### 📊 Indic MMLU Results 
 
+| ![Assamese](assets/assamese.png) | ![Bengali](assets/bengali.png) |
+|----------------------------------|--------------------------------|
+| ![English](assets/English.png)   | ![Gujarati](assets/Gujrati.png) |
+| ![Hindi](assets/Hindi.png)       | ![Kannada](assets/kannada.png) |
+| ![Maithili](assets/maithili.png) | ![Malayalam](assets/Malayalam.png) |
+| ![Marathi](assets/marathi.png)   | ![Nepali](assets/Nepali.png)   |
+| ![Oriya](assets/oriya.png)       | ![Punjabi](assets/Punjabi.png) |
+| ![Sanskrit](assets/sanskrit.png) | ![Sindhi](assets/sindhi.png)   |
+| ![Tamil](assets/Tamil.png)       | ![Telugu](assets/Telugu.png)   |
 
 
 ## Contact
