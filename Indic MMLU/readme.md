@@ -191,7 +191,7 @@ bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
 1. **Environment:** Docker image `vllm/vllm-openai:latest` to ensure a reproducible inference environment.
 2. **Framework:** `lm-eval` for standardized metrics and consistent evaluation across models.
 3. **Metrics:** per-language accuracy, top-k model rankings per language, and aggregate averages.
-4. **Visualization:** radar plots per language and top-3 model plots for quick comparative analysis.
+4. **Visualization:** radar plots per language on 26 opensource models.
 
 ### 📊 Indic MMLU Results 
 
