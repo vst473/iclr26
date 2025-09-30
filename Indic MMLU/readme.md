@@ -159,7 +159,7 @@ bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
 
 ---
 
-### 📝 Summary of LLM-as-Judge Ratings
+### Summary of LLM-as-Judge Ratings
 
 To evaluate translation quality systematically, we employed **LLMs as judges**, operating under three carefully designed expert personas:
 
