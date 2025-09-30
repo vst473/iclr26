@@ -1,7 +1,7 @@
 # Indic MMLU — Benchmarking Open-Source LLMs on Indian Languages
 
 **Short description:**
-A rigorously prepared, multi-language adaptation of the CAIS/MMLU test set, translated and enhanced for 16 Indic languages to evaluate open-source LLMs’ real-world understanding of Indian languages. This README explains *what* we built, *why* it matters, *how* it was produced, and *how* to reproduce the evaluation.
+A rigorously prepared, multi-language adaptation of the CAIS/MMLU test set, translated and enhanced for 22 Indic languages to evaluate open-source LLMs’ real-world understanding of Indian languages. This README explains *what* we built, *why* it matters, *how* it was produced, and *how* to reproduce the evaluation.
 
 ---
 
@@ -21,9 +21,9 @@ A model whose score on an Indic version is close to its English MMLU score demon
 ## Overview
 
 * **Source benchmark:** CAIS/MMLU (general knowledge QA benchmark).
-* **Target:** 16 Indic languages + English (translated test set).
+* **Target:** 22 Indic languages + English (translated test set).
 * **Workflow:** Machine translation → LLM-based translation enhancement → embedding comparison → human/linguist rating and automated evaluation.
-* **Deliverables:** Enhanced translated `.jsonl` datasets, per-language embeddings, cosine similarity reports, teacher/linguist ratings, model evaluation scores and visualizations (radar plots, top-3 per language).
+* **Deliverables:** Enhanced translated `.jsonl` datasets, per-language embeddings, cosine similarity reports, teacher/linguist ratings, model evaluation scores and visualizations (radar plots).
 
 ---
 
