@@ -1,67 +1,46 @@
-Perfect 👌 Thanks for sharing both. Since both READMEs are about the same project but highlight different angles — the **technical pipeline (first one)** and the **research/experiments + results (second one)** — I’ll carefully merge them into one clean `README.md` without losing any information.
+Got it 👍 — the merged one is too dense right now, so the GitHub preview won’t feel as polished as your original READMEs. Let’s fix that.
 
-Here’s the **final merged README** you can directly use in your GitHub repo:
+To make it look **clean, structured, and professional** in GitHub’s markdown preview, we should:
+
+* Keep **short sections with clear headers**.
+* Use **emoji headers sparingly** for readability.
+* Place **diagrams, tables, and results** in collapsible `<details>` blocks so the front page isn’t overloaded.
+* Separate **practical pipeline usage** and **research results** — so developers can quickly run the code, and researchers can expand the details if they want.
+
+Here’s a **cleaned-up and better-styled final `README.md`** you can use:
 
 ````markdown
-# 📘 Common Crawl Indic Language Processing & Data Curation Pipeline
+# 📘 Common Crawl Indic Language Processing & Data Curation
 
-This repository provides a **complete pipeline** for downloading, filtering, classifying, and curating Indic language text data from **Common Crawl** WET dumps.  
-It also includes **curation experiments** conducted for research (published in our paper), demonstrating the impact of curated vs. conventional datasets on pretraining performance.
+This repository provides:
+- A **four-stage pipeline** for downloading, filtering, classifying, and curating Indic language text data from **Common Crawl** WET dumps.  
+- **Curation experiments & results** from our research paper, showing the benefits of high-quality data curation.
 
 ---
 
 ## ⚡ Pipeline Overview
 
-### 1. Download & Stream Filtering
-* Download each WET file from Common Crawl using `wget` (10–12 workers to avoid IP blocking).
-* Unzip in memory with `pigz`.
-* Stream through regex filters to separate Indic language candidates.
-
-### 2. Regex Filtering (Streaming)
-* Apply Unicode regex patterns for Devanagari, Bengali, Tamil, Telugu, etc.
-* Write matched lines into separate JSONL files for each language.
-
-### 3. Strict Language Classification
-* Use **FastText** (`lid.176.bin`) to refine classification.
-* Disambiguates languages where Unicode ranges overlap (e.g., Hindi vs. Marathi).
-* Supports **strict mode**: ensures script-based character verification.
-
-### 4. Data Curation
-* Apply multiple filters using **NeMo-Curator**:
-  * `clean_and_unify` (basic cleaning, normalization)
-  * `heuristic_filter` (quality-based filtering)
-  * `dedupe` (exact & fuzzy deduplication)
-  * `redact_pii` (removes personally identifiable information)
-  * Toxic filtering (rule-based wordlist, provided in repo)
-  * Quality filtering (document-level, boilerplate removal, word/symbol checks)
+1. **Download & Stream Filtering** – fetch WET dumps, unzip with `pigz`, stream regex filters.  
+2. **Regex Filtering** – Unicode-based matching for Indic scripts (Hindi, Bengali, Tamil, Telugu, etc.).  
+3. **Language Classification** – strict FastText filtering with script verification.  
+4. **Data Curation** – NeMo-Curator filters for cleaning, deduplication, heuristic quality checks, PII redaction, toxic filtering.
 
 ---
 
-## 🛠️ Setup & Requirements
+## 🛠️ Setup
 
 ### System Dependencies
-* Linux environment
-* Python 3.9+
-* [pigz](https://zlib.net/pigz/) (parallel gzip decompression)
-* wget
+- Linux environment
+- Python 3.9+
+- [pigz](https://zlib.net/pigz/) (parallel gzip decompression)
+- `wget`
 
-### Python Libraries
-Install requirements:
+### Installation
 ```bash
 pip install -r requirements.txt
 ````
 
-Typical requirements:
-
-* `tqdm`
-* `fasttext`
-* `nemo-curator`
-* `dask[distributed]`
-* `regex`
-* `transformers`
-* `datasets`
-
-Or create an environment:
+Or with Conda:
 
 ```bash
 conda create -n curator python=3.10 -y
@@ -83,7 +62,7 @@ python3 process_final.py \
   --batch-size 20
 ```
 
-### 2. Regex Filtering (Standalone Option)
+### 2. Regex Filtering (Standalone)
 
 ```bash
 cat file.wet | pigz -d | \
@@ -93,7 +72,7 @@ python3 streaming_regex.py \
   --workers 16
 ```
 
-### 3. Language Classification with FastText
+### 3. Language Classification
 
 ```bash
 python3 classify_fasttext.py \
@@ -112,18 +91,12 @@ python3 curate_data.py \
   --output ./curated/hindi_cleaned.jsonl
 ```
 
-Or via provided scripts:
+Or use the provided script:
 
 ```bash
 bash scripts/run_curator.sh --config configs/curator.yaml \
                             --input data/raw/ \
                             --output data/curated/
-```
-
-Inspect curated data:
-
-```bash
-jupyter notebook notebooks/quality_checks.ipynb
 ```
 
 ---
@@ -135,12 +108,10 @@ output/
  ├── tel/         # Telugu regex matches
  ├── hin/         # Hindi regex matches
  ├── ben/         # Bengali regex matches
- ...
 classified/
  ├── hindi.txt
  ├── bengali.txt
  ├── tamil.txt
- ...
 curated/
  ├── hindi_cleaned.jsonl
  ├── bengali_cleaned.jsonl
@@ -151,52 +122,53 @@ curated/
 
 ## 📊 Research & Ablation Experiments
 
-Our **ablation study** evaluated the effect of curation on pretraining outcomes.
+<details>
+<summary>🔎 Curation Pipeline & Experiments (click to expand)</summary>
 
-### Curation Pipeline Diagram
+### Pipeline Diagram
 
 ![Curation Pipeline](/readme-resources/data-curation.png)
 
-### Stages of Curation
+### Stages
 
-1. **Raw Corpus Construction** (aggregate large-scale text, English + Hindi).
-2. **Deduplication & Cleaning** (NeMo Curator DCLM, FWE filtering).
-3. **Quality Filtering** (remove boilerplate/noise, enforce language ID).
-4. **Indian Language Adaptation** (Hindi tokenization + Unicode unification).
-5. **Final Curated Dataset** (domain-diverse, high-quality corpus).
+1. Raw corpus construction (English + Hindi).
+2. Deduplication & cleaning (NeMo Curator, FWE filtering).
+3. Quality filtering (boilerplate removal, noise filtering, strict LangID).
+4. Indic adaptation (Hindi tokenization + Unicode normalization).
+5. Final curated dataset (domain-diverse, high-quality).
 
-### Base Pretraining Checkpoint
+### Base Pretraining Setup
 
 * **Model**: Param-1 PT (2.9B parameters)
 * **Checkpoint**: [Hugging Face: Param-1 PT1](https://huggingface.co/bharatgenai/Param-1)
-* **Tokens Trained**: 5T (baseline) + 2T (experiment extension)
-* **Training Recipe**: [Param Paper](https://arxiv.org/pdf/2507.13390)
+* **Tokens Trained**: 5T baseline + 2T extension
+* **Recipe**: [Param Paper](https://arxiv.org/pdf/2507.13390)
 
-### Training Data Conditions
+### Data Conditions
 
-1. **Without Curation**: [Download Non-Curated](https://example.com/datasets/param_ablation/english_hindi_noncurated)
-2. **With Curation**: [Download Curated](https://example.com/datasets/param_ablation/english_hindi_curated)
+* **Non-curated**: [Download](https://example.com/datasets/param_ablation/english_hindi_noncurated)
+* **Curated**: [Download](https://example.com/datasets/param_ablation/english_hindi_curated)
 
-Both datasets had **2T tokens** for fair comparison.
+Both matched at **2T tokens**.
 
-### Results – Benchmark Performance
+### Results – Benchmark Scores
 
 | **Model**    | **ARC Challenge** | **ARC Easy** | **Hella Swag** | **Hella Swag Hi** | **MMLU** | **MMLU Hi** |
 | ------------ | ----------------: | -----------: | -------------: | ----------------: | -------: | ----------: |
 | Conventional |              46.5 |         73.6 |           73.5 |              28.9 |     41.3 |        26.2 |
 | Curated      |              53.6 |         74.2 |           73.8 |              41.4 |     46.2 |        34.6 |
 
-Curated data shows **consistent improvements**, especially in Indic language benchmarks.
+**Observation**: Curated data consistently improves performance, especially in Hindi benchmarks.
 
 ### Toxicity Reduction
 
 ![Toxicity Sample](/readme-resources/toxic-comparison)
 
-Curated pipeline significantly reduces toxic/low-quality content.
+</details>
 
 ---
 
-## 📂 Repository Structure
+## 📂 Repository Layout
 
 ```
 iclr-submission/
@@ -222,10 +194,10 @@ iclr-submission/
 
 ## ⚠️ Notes
 
-* Run the download step with **10–12 workers max** to avoid IP throttling from Common Crawl.
-* Regex filtering is **broad**; FastText + script verification ensures accuracy.
-* For **large-scale runs**, use a **Dask cluster** for curation.
-* Curated and non-curated corpora are both compatible with **NeMo pretraining recipes**.
+* Use **10–12 workers max** during download to avoid throttling.
+* Regex filtering is broad; FastText + script checks ensure strict accuracy.
+* Use a **Dask cluster** for large-scale curation.
+* Both curated and non-curated datasets plug directly into NeMo pretraining.
 
 ---
 
@@ -240,4 +212,3 @@ iclr-submission/
 * [https://arxiv.org/html/2412.01505](https://arxiv.org/html/2412.01505)
 * [https://www.emergentmind.com/papers/2403.08540](https://www.emergentmind.com/papers/2403.08540)
 
----
