@@ -33,7 +33,7 @@ This separation ensures the dataset is **broad and inclusive**, while evaluation
 
 * **Source benchmark:** CAIS/MMLU (general knowledge QA benchmark).
 * **Target:** 22 Indic languages + English (translated test set).
-* **Workflow:** Machine translation → LLM-based translation enhancement → embedding comparison → human/linguist rating and automated evaluation.
+* **Workflow:** Machine translation → LLM-based translation enhancement → embedding comparison → Persona based LLM-as-judge Scores → Correlation between Embeddings and LLM as Judge → human/linguist rating and automated evaluation.
 * **Deliverables:** Enhanced translated `.jsonl` datasets, per-language embeddings, cosine similarity reports, teacher/linguist ratings, model evaluation scores and visualizations (radar plots).
 
 ---
@@ -41,7 +41,7 @@ This separation ensures the dataset is **broad and inclusive**, while evaluation
 ## Key principles applied
 
 1. **Preserve semantic parity:** Questions remain semantically the same as English; only language changes.
-2. **Quality control:** Automated checks (embeddings, math correctness) + human linguist ratings.
+2. **Quality control:** Model-Based Automated checks (embeddings, math correctness) + human linguist ratings.
 3. **Reproducibility:** Dockerized inference environment, scriptable pipeline, and clear CLI commands.
 4. **Transparency:** We provide similarity metrics to demonstrate translation fidelity and teacher ratings to highlight linguistic quality.
 
@@ -53,7 +53,7 @@ This separation ensures the dataset is **broad and inclusive**, while evaluation
 2. **Enhance** those translations using an open-source LLM with task-specific instructions (to correct phrasing, clarify ambiguous translations, preserve math expressions, and maintain answer choices alignment).
 3. **Embed** both the original English items and the (enhanced) translated items with the same embedding model.
 4. **Compare** embeddings using cosine similarity to measure semantic closeness.
-5. **Human review**: linguists/teachers rated samples for language quality, math correctness, and coherence.
+5. **LLM as Judge and Human review**: linguists/teachers rated samples for language quality, math correctness, and coherence.
 6. **Evaluate models**: run ~24 open-source LLMs across all languages using the lm-eval framework and visualize results (radar plots, top-3 per language).
 
 ---
@@ -64,7 +64,7 @@ To complement the pseudo-code, the following flowchart provides a **visual overv
 
 * **Translation Stage:** The English MMLU instance is translated into Indic languages using specialist MT.
 * **Enhancement Stage:** Translations are refined with large-scale LLMs for improved fluency and alignment.
-* **Judging Phase:** Three types of evaluation are conducted — *fluency by native language experts, subject correctness by domain experts, and alignment by coherence judges*.
+* **LLM Based Judging Phase:** Three types of evaluation are conducted — *fluency by native language experts, subject correctness by domain experts, and alignment by coherence judges*.
 * **Validation Stage:** Embedding similarity checks, n-gram metrics (BLEU, ROUGE, ChrF++), and discrepancy detection ensure quality.
 * **Final Output:** A validated Indic MMLU dataset instance ready for benchmarking.
 
@@ -73,14 +73,48 @@ To complement the pseudo-code, the following flowchart provides a **visual overv
 # Pseudo-algorithm 
 
 ```
-For each language in target_languages:
-  translated = translate(original_mmlu, tgt=language)
-  enhanced = enhance_using_llm(translated, instructions)
-  eng_emb = embed(original_mmlu)
-  trans_emb = embed(enhanced)
-  sim_scores = cosine_similarity(eng_emb, trans_emb)
-  human_ratings = rate_sample(enhanced)
-Aggregate results, compute per-language model scores, produce visualizations
+### Multilingual Evaluation Pipeline
+
+**Input:**
+
+* `original_mmlu`: The original dataset in English.
+* `target_languages`: List of languages for evaluation.
+* `instructions`: Guidelines for enhancement.
+
+**Algorithm:**
+
+1. **For each language `L` in `target_languages`:**
+   a. **Translation:**
+
+   * `translated ← translate(original_mmlu, tgt=L)`
+     b. **Enhancement:**
+   * `enhanced ← enhance_using_llm(translated, instructions)`
+     c. **Embedding & Similarity:**
+   * `eng_emb ← embed(original_mmlu)`
+   * `trans_emb ← embed(enhanced)`
+   * `sim_scores ← cosine_similarity(eng_emb, trans_emb)`
+     d. **LLM-as-Judge Scoring:**
+   * `llm_scores ← LLM_as_Judge(original_mmlu, translated)`
+     e. **Consistency Check:**
+   * `consistency ← consistency_check(sim_scores, llm_scores)`
+   * If `consistency` is poor → flag for human evaluation
+   * Else → accept translation
+     f. **Human Rating (if flagged):**
+   * `human_ratings ← rate_sample(enhanced)`
+
+2. **Aggregate Results:**
+
+   * Combine LLM scores, similarity scores, and human ratings.
+   * Compute per-language performance metrics.
+
+3. **Visualization:**
+
+   * Generate visual summaries (e.g., bar charts, heatmaps) for cross-language comparison.
+
+**Output:**
+
+* Per-language evaluation scores.
+* Visualizations of translation quality and consistency.
 ```
 
 This visual representation makes it easier to understand how the **algorithmic steps, human evaluation, and automated checks** come together to ensure translation quality and dataset reliability.
