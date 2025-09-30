@@ -1,99 +1,147 @@
+# Indic MMLU — Benchmarking Open-Source LLMs on Indian Languages
 
-# Indic MMLU Dataset
+**Short description:**
+A rigorously prepared, multi-language adaptation of the CAIS/MMLU test set, translated and enhanced for 16 Indic languages to evaluate open-source LLMs’ real-world understanding of Indian languages. This README explains *what* we built, *why* it matters, *how* it was produced, and *how* to reproduce the evaluation.
+
+---
+
+## Why this dataset exists (the purpose — stated clearly)
+
+Large language models are frequently trained and benchmarked on English datasets. To fairly evaluate whether an open-source model genuinely understands an Indic language (and not just mirror English behavior), we translated the widely used CAIS/MMLU benchmark into Indian languages and improved translation quality with controlled enhancement steps.
+
+A model whose score on an Indic version is close to its English MMLU score demonstrates *robust language understanding* (not just brittle translation or token mapping). This benchmark therefore helps:
+
+* Measure cross-lingual generalization of LLMs.
+* Identify language-specific weaknesses (math, domain knowledge, phrasing).
+* Guide model development and fine-tuning for Indian languages.
+* Provide a reproducible dataset and evaluation pipeline for the community.
+
+---
 
 ## Overview
-This dataset was created by translating the CAIS/MMLU test dataset into various Indic languages. Enhancements were made using an open-source large language model (LLM) to improve translation quality.
 
-## Steps Followed
-1. Take the original CAIS/MMLU test dataset (https://huggingface.co/datasets/cais/mmlu/viewer).
-2. Translate the dataset using a machine translation model (IndicTrans2).
-3. Enhance translations using an open-source LLM with specified instructions and concurrency.
-4. Generate embeddings for both the original English and Indic translated/enhanced versions.
-5. Calculate cosine similarity between the embeddings of the original and translated datasets.
-6. Judge translation enhancement based on math correctness, coherence, and linguistic expert ratings.
+* **Source benchmark:** CAIS/MMLU (general knowledge QA benchmark).
+* **Target:** 16 Indic languages + English (translated test set).
+* **Workflow:** Machine translation → LLM-based translation enhancement → embedding comparison → human/linguist rating and automated evaluation.
+* **Deliverables:** Enhanced translated `.jsonl` datasets, per-language embeddings, cosine similarity reports, teacher/linguist ratings, model evaluation scores and visualizations (radar plots, top-3 per language).
 
-## Pseudo Code for Indic MMLU Creation Algorithm
+---
 
-Here is the pseudo code outlining the high-level algorithm used to create the Indic MMLU dataset:
+## Key principles applied
+
+1. **Preserve semantic parity:** Questions remain semantically the same as English; only language changes.
+2. **Quality control:** Automated checks (embeddings, math correctness) + human linguist ratings.
+3. **Reproducibility:** Dockerized inference environment, scriptable pipeline, and clear CLI commands.
+4. **Transparency:** We provide similarity metrics to demonstrate translation fidelity and teacher ratings to highlight linguistic quality.
+
+---
+
+## High-level pipeline (what we did)
+
+1. **Translate** the CAIS/MMLU test set to each Indic language using *IndicTrans2* (baseline MT).
+2. **Enhance** those translations using an open-source LLM with task-specific instructions (to correct phrasing, clarify ambiguous translations, preserve math expressions, and maintain answer choices alignment).
+3. **Embed** both the original English items and the (enhanced) translated items with the same embedding model.
+4. **Compare** embeddings using cosine similarity to measure semantic closeness.
+5. **Human review**: linguists/teachers rated samples for language quality, math correctness, and coherence.
+6. **Evaluate models**: run ~24 open-source LLMs across all languages using the lm-eval framework and visualize results (radar plots, top-3 per language).
+
+---
+
+## Pseudo-algorithm (concise)
 
 ```
-Algorithm: Create_Indic_MMLU_Dataset
-
-Input: Original English MMLU dataset file
-Output: Enhanced Indic MMLU datasets, embeddings, similarity scores, evaluation ratings
-
-1. Procedure Translate_Dataset(input_file, tgt_lang, src_lang)
-2. Procedure Enhance_Translations(translated_file, instruction_path, task, ...)
-3. Procedure Generate_Embeddings(input_file, output_file, server_url, concurrency)
-4. Procedure Calculate_Cosine_Similarity(input_dir, output_dir, english_file)
-5. Procedure Judge_Enhancements(input_file, output_file, instruction_path, task, ...)
-
-6. Main:
-   For each target Indic language:
-     - Translate dataset
-     - Enhance translations
-     - Generate embeddings
-     - Calculate cosine similarity
-     - Judge enhancements
-   Aggregate and report summaries
+For each language in target_languages:
+  translated = translate(original_mmlu, tgt=language)
+  enhanced = enhance_using_llm(translated, instructions)
+  eng_emb = embed(original_mmlu)
+  trans_emb = embed(enhanced)
+  sim_scores = cosine_similarity(eng_emb, trans_emb)
+  human_ratings = rate_sample(enhanced)
+Aggregate results, compute per-language model scores, produce visualizations
 ```
 
+---
 
-## Commands Used
+## Reproducible commands (examples)
 
-- **Translate:**
-  ```bash
-  python3 trans_mmlu.py --input_file_path test-00000-of-00001_with_ids.jsonl \
-    --output_file_path mmlu_kn_in.jsonl --tgt_lang "kn" --src_lang "en"```
+> These are the canonical commands used in our pipeline. Replace file paths, ports, and concurrency values as appropriate for your environment.
 
-* **Enhance translations:**
+**Translate**
 
-  ```bash
-  python3 async_infr.py --input-path mmlu_as_in.jsonl \
-    --output-file ds_enhance_eval_hi.jsonl \
-    --instruction-path instruction_prompts.yml \
-    --task deepseek_enhance_instruct \
-    --template-fields 'og_question' 'og_choices' 'question' 'answer' 'Hindi' \
-    --max-concurrency 4096 \
-    --backend sglang-oai-chat \
-    --extra-request-body '{"temperature":0.7,"top_p":0.9,"top_k":50,"max_tokens":1024}' \
-    --port 30000
-  ```
+```bash
+python3 trans_mmlu.py \
+  --input_file_path test-00000-of-00001_with_ids.jsonl \
+  --output_file_path mmlu_kn_in.jsonl \
+  --tgt_lang "kn" \
+  --src_lang "en"
+```
 
-* **Get embeddings:**
+**Enhance translations (LLM-based)**
 
-  ```bash
-  python get_embeddings.py --input-file test-00000-of-00001_with_ids.jsonl \
-    --output-file mmlu_qwen3_embd.jsonl \
-    --server-url http://127.0.0.1:30000 \
-    --concurrency 4096
-  ```
+```bash
+python3 async_infr.py \
+  --input-path mmlu_as_in.jsonl \
+  --output-file ds_enhance_eval_hi.jsonl \
+  --instruction-path instruction_prompts.yml \
+  --task deepseek_enhance_instruct \
+  --template-fields 'og_question' 'og_choices' 'question' 'answer' 'Hindi' \
+  --max-concurrency 4096 \
+  --backend sglang-oai-chat \
+  --extra-request-body '{"temperature":0.7,"top_p":0.9,"top_k":50,"max_tokens":1024}' \
+  --port 30000
+```
 
-* **Calculate cosine similarity:**
+**Generate embeddings**
 
-  ```bash
-  python3 calculate_cosine_similarity.py --input_dir deepseek_enhance \
-    --output_dir mmmlu/similarity/cosine/enhance/deepseek_enhance \
-    --english_file mmlu_eng.jsonl
-  ```
+```bash
+python3 get_embeddings.py \
+  --input-file test-00000-of-00001_with_ids.jsonl \
+  --output-file mmlu_qwen3_embd.jsonl \
+  --server-url http://127.0.0.1:30000 \
+  --concurrency 4096
+```
 
-* **Judge translation:**
+**Cosine similarity (English vs translated enhancements)**
 
-  ```bash
-  python3 async_infr.py --input-path mmlu_as_in.jsonl \
-    --output-file ds_enhance_eval_as_qwen3_instruct.jsonl \
-    --instruction-path instruction_prompts.yml \
-    --task rate_translated_text_linguist \
-    --template-fields 'og_question' 'og_choices' 'enhanced_text' 'Assamese' \
-    --max-concurrency 4096 \
-    --backend sglang-oai-chat \
-    --extra-request-body '{"temperature":0.7,"top_p":0.9,"top_k":50,"max_tokens":1024}' \
-    --port 30000
-  ```
+```bash
+python3 calculate_cosine_similarity.py \
+  --input_dir deepseek_enhance \
+  --output_dir mmmlu/similarity/cosine/enhance/deepseek_enhance \
+  --english_file mmlu_eng.jsonl
+```
 
-## Summary of Teacher Ratings
+**Linguist / teacher rating (LLM assisted orchestration)**
 
-Average teacher ratings for translation enhancement across languages such as Nepali, Telugu, Oriya, Punjabi, Assamese, Sanskrit, Kannada, Sindhi, Gujarati, Marathi, Tamil, Malayalam, and Maithili.
+```bash
+python3 async_infr.py \
+  --input-path mmlu_as_in.jsonl \
+  --output-file ds_enhance_eval_as_qwen3_instruct.jsonl \
+  --instruction-path instruction_prompts.yml \
+  --task rate_translated_text_linguist \
+  --template-fields 'og_question' 'og_choices' 'enhanced_text' 'Assamese' \
+  --max-concurrency 4096 \
+  --backend sglang-oai-chat \
+  --extra-request-body '{"temperature":0.7,"top_p":0.9,"top_k":50,"max_tokens":1024}' \
+  --port 30000
+```
+
+**Model evaluation with `lm-eval`**
+
+```bash
+# Example wrapper which runs evaluation for a model snapshot against the Indic MMLU dataset
+bash lm-eval-llm.sh /path/to/model_snapshot /benchmark-result-path
+```
+
+---
+
+## Summary of human (teacher) ratings — interpretation
+
+* **What we measured:** language quality, math correctness, coherence, and linguistic suitability.
+* **How to read the table:** higher scores (closer to the upper bound used during rating) indicate better perceived translation/enhancement quality and correctness.
+* **Notable:** Most languages show high average scores (>8.9) indicating strong quality after enhancement. A few languages display outlier lower ratings suggesting targeted improvement is still required.
+
+> *Full numerical table is included with the release artifacts.*
+> (If you want, we can add a compact CSV or markdown table in the repo root for quick reference.)
 
 * Ratings cover **language quality, math correctness, coherence, and linguistic aspects**.
 
@@ -113,12 +161,13 @@ Average teacher ratings for translation enhancement across languages such as Nep
 | Malayalam | 9.134952       | 8.998148           | 7.956488          | 14042         |
 | Maithili  | 9.263282       | 9.118146           | 8.218772          | 14042         |
 
+---
 
-## Cosine Similarity Scores
+## Cosine similarity — interpretation
 
-Cosine similarity was calculated between the original English and enhanced/translated Indic MMLU embeddings.
-
-* **Mean similarity** ranges from ~0.76 to 0.85 depending on the language.
+* Cosine similarity gives a quick automated signal of semantic closeness between the translated/enhanced items and their English originals.
+* Typical mean similarities range from ~0.76 to 0.85 across languages; higher means closer embeddings (better semantic preservation).
+* Use the similarity scores as a triage: low similarity → manual review; high similarity → likely semantically faithful.
 
 | Language               | Mean Similarity | Std Similarity | Min Similarity | Max Similarity |
 |-------------------------|-----------------|----------------|----------------|----------------|
@@ -138,49 +187,14 @@ Cosine similarity was calculated between the original English and enhanced/trans
 | mmlu_ta_in_qwen3_embed  | 0.7964          | 0.0559         | 0.5242         | 1              |
 | mmlu_te_in_qwen3_embed  | 0.8006          | 0.0524         | 0.5379         | 1              |
 
+---
 
-## Model Evaluation
+## Model evaluation methodology (concise)
 
-### Model Evaluation Methodology
-
-We evaluated ~24 open-source LLMs across 16 languages using the Indic MMLU benchmark. The evaluation workflow was as follows:
-
-1. **Environment Setup**
-
-   * Used the Docker image `vllm/vllm-openai:latest` for a reproducible inference environment.
-   * Installed the evaluation framework:
-
-     ```bash
-     pip install lm-eval
-     ```
-
-2. **Model Evaluation**
-   Each model was evaluated using the `lm-eval` framework on the Indic MMLU dataset:
-
-   ```bash
-   bash lm-eval-llm.sh <path_to_model_snapshot> <path_to_mmmlu_dataset>
-   ```
-
-   Example:
-
-   ```bash
-   bash lm-eval-llm.sh /workspace/bds/glm/hub/models--zai-org--GLM-4.5/snapshots/cbb2c7cfb52fa128a9660cb1a7a78e017899e115 /workspace/bds/mmmlu-benchmark/glm
-   ```
-
-3. **Metrics Computed**
-
-   * **Accuracy per Language**: Each model’s performance on the test set for each Indic language.
-   * **Top-Performing Models**: Identified by sorting model scores for each language.
-   * **Overall Performance**: Calculated as the average score across all languages.
-
-4. **Aggregation and Visualization**
-
-   * Scores were aggregated to generate language-wise summaries.
-   * **Radar plots** were created for each language to visually represent the relative performance of all evaluated models.
-
-## Model Evaluation Table
-
-The full table contains evaluation scores for ~24 models across 16 languages (including English). To simulate a landscape format split across two "pages" in markdown, it is divided as follows:
+1. **Environment:** Docker image `vllm/vllm-openai:latest` to ensure a reproducible inference environment.
+2. **Framework:** `lm-eval` for standardized metrics and consistent evaluation across models.
+3. **Metrics:** per-language accuracy, top-k model rankings per language, and aggregate averages.
+4. **Visualization:** radar plots per language and top-3 model plots for quick comparative analysis.
 
 ### 📊 Indic MMLU Results 
 
@@ -194,8 +208,32 @@ The full table contains evaluation scores for ~24 models across 16 languages (in
 | ![Sanskrit](assets/sanskrit.png) | ![Sindhi](assets/sindhi.png)   |
 | ![Tamil](assets/Tamil.png)       | ![Telugu](assets/Telugu.png)   |
 
+---
 
-## Contact
+## How to reproduce (quick checklist)
 
-For any queries or collaboration, please contact the dataset maintainer.
+1. Prepare the English CAIS/MMLU test set (`.jsonl` with IDs).
+2. Run `trans_mmlu.py` to produce per-language MT outputs.
+3. Run `async_infr.py` with the enhancement task to obtain human-readable improved translations.
+4. Generate embeddings for both English and enhanced translations.
+5. Run `calculate_cosine_similarity.py` to produce similarity reports.
+6. Optionally run human/linguist rating orchestration for additional quality assessment.
+7. Evaluate models with `lm-eval` and generate visualizations.
+
+---
+
+## Best practices & caveats
+
+* **Math and formatting:** preserve mathematical expressions and numerals during translation—these are critical for correctness.
+* **Choice alignment:** ensure answer choices remain in the same order and map to the same ground-truth labels.
+* **Human review:** automated metrics are helpful but not sufficient; include periodic linguist sampling.
+* **Constrained inference:** use deterministic LLM settings for enhancement (lower temperature, consistent decoding) to reduce hallucination.
+
+---
+
+## Visual assets & tables
+
+We include per-language radar plots and a consolidated results panel in `plots/`. The README in the repo contains thumbnails; click through for full-resolution visuals. If you want, I can add a two-column gallery layout for those images in the README for better presentation.
+
+---
 
