@@ -138,6 +138,7 @@ Traditional metrics are insufficient post-enhancement. Our framework includes:
 
 #### Without Preprocessing and Postprocessing
 
+
 | Model                                   | bashini CER | bashini WER | bashini PI-WER | bashini Char3gram-F1 | mozhi CER | mozhi WER | mozhi PI-WER | mozhi Char3gram-F1 | iiit CER | iiit WER | iiit PI-WER | iiit Char3gram-F1 |
 |----------------------------------------|------------|------------|----------------|---------------------|-----------|-----------|--------------|------------------|----------|----------|-------------|-----------------|
 | dotsOCR2                                | 0.168      | 0.253      | 0.23           | 0.801               | 0.12      | 0.19      | 0.9          | 0.88              | 0.15     | 0.22     | 0.91        | 0.86             |
@@ -159,6 +160,7 @@ Traditional metrics are insufficient post-enhancement. Our framework includes:
 
 #### With Preprocessing and Postprocessing
 
+
 | Model | CER | WER | PI-WER | Char3-gram F1 |
 |-------|-----|-----|--------|---------------|
 | dots.OCR | 0.168 | 0.253 | 0.23 | 0.801 |
@@ -166,9 +168,10 @@ Traditional metrics are insufficient post-enhancement. Our framework includes:
 | Surya | 0.2 | 0.28 | 0.138 | 0.867 |
 | Surya - postcorrected | 0.095 | 0.16 | 0.11 | 0.925 |
 
+
 ### Key Findings
 
-- VLMs provide coverage but hallucinate in Indic scripts
+- VLMs cover Indic scripts but hallucinate extra text, inflating CER and WER beyond 1.
 - Specialist OCR models outperform after preprocessing + postcorrection
 - Postcorrection improves CER by ~50% and WER by ~40% on average
 - Pretraining on processed OCR text yields smoother convergence vs. raw OCR
@@ -192,6 +195,7 @@ Future releases planned for **Indic-Real-OCR** and **Indic-Synthetic-OCR** varia
 |----------------------------------------|-----------|-----------|-------------|-----------------|
 | dotsOCR2                                | 0.73919   | 0.86158   | 0.72613     | 0.30264         |
 | Surya                                   | 0.88765   | 0.89821   | 0.88141     | 0.14812         |
+
 
 ---
 
