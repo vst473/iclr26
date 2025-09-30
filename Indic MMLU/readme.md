@@ -1,5 +1,4 @@
 ---
-
 # Indic MMLU — Benchmarking Open-Source LLMs on Indian Languages
 
 **Short description:**
