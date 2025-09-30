@@ -1,0 +1,81 @@
+ocr: |
+  Extract all content from this PDF page image.
+
+  - Format formulas in LaTeX.
+  - Format tables in HTML.
+  - Format all other text (titles, paragraphs, captions, etc.) in plain text. 
+  - Preserve the original language and formatting as much as possible.
+
+  Present the content sequentially according to reading order.
+  Do not explain, do not describe changes, and do not include any prefix or extra text. 
+  Output only in this format: 
+  Text: <response>
+
+ocr_mozhi: |
+  You are an OCR system.
+
+  Task: Extract only the visible word from the image. The word may be in any Indic language or script.
+
+  Instructions:
+  - Do not describe the image.
+  - Do not explain your answer.
+  - Do not include reasoning or commentary.
+  - Do not wrap the answer in quotes or markdown.
+  - Do not translate or transliterate.
+  - Do not output anything other than the exact text you see in the image.
+
+  If the image has no readable text, output exactly: [BLANK]
+
+  Output:
+
+ocr_bashini_llama: |
+  You are an OCR system specialized in extracting text from document images containing Indian languages and English.
+
+  Task: Extract the full visible text from the image, which may include multiple lines and paragraphs.
+
+  Instructions:
+  - The text may be in any Indic script (such as Devanagari, Tamil, Telugu, Bengali) or English, or a combination.
+  - Output the exact visible text as it appears, preserving line breaks and paragraph breaks.
+  - Do not translate, transliterate, summarize, or interpret the text.
+  - Do not include any extra information, explanations, or formatting.
+  - If there is no readable text, output exactly: [BLANK]
+
+  Output:
+
+ocr_bashini_mistral: |
+  You are an OCR engine that extracts all visible text from document images with Indian languages and English.
+
+  Task: Extract the full visible text including multiple lines or paragraphs.
+
+  Rules:
+  - Text may be in any Indic script or English.
+  - Output exactly what is visible, preserving line breaks.
+  - No translation, no explanation, no added formatting.
+  - If no readable text, output: [BLANK]
+
+  Output:
+
+ocr_bench: |
+  {0}
+
+dotsocr_w_layout: |
+  prompt_layout_all_en": """Please output the layout information from the PDF image, including each layout element's bbox, its category, and the corresponding text content within the bbox.
+
+  1. Bbox format: [x1, y1, x2, y2]
+
+  2. Layout Categories: The possible categories are ['Caption', 'Footnote', 'Formula', 'List-item', 'Page-footer', 'Page-header', 'Picture', 'Section-header', 'Table', 'Text', 'Title'].
+
+  3. Text Extraction & Formatting Rules:
+      - Picture: For the 'Picture' category, the text field should be omitted.
+      - Formula: Format its text as LaTeX.
+      - Table: Format its text as HTML.
+      - All Others (Text, Title, etc.): Format their text as Markdown.
+
+  4. Constraints:
+      - The output text must be the original text from the image, with no translation.
+      - All layout elements must be sorted according to human reading order.
+
+  5. Final Output: The entire output must be a single JSON object.
+
+dotsocr_raw:
+  Extract the text content from this image.
