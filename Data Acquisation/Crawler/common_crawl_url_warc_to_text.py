@@ -37,7 +37,7 @@ logger = logging.getLogger(__name__)
 
 # Configuration
 # Set PARQUET_PATH to a local file path or a URL( parquet file from Common Crawl index)
-PARQUET_PATH = "part-00288-88b30a59-3c73-48ba-a167-077611bfd245.c000.gz.parquet"
+PARQUET_PATH = "./data/part-00288-88b30a59-3c73-48ba-a167-077611bfd245.c000.gz.parquet"
 if not PARQUET_PATH:
     logger.error("Usage: python script.py <parquet_file_path_or_url>")
     sys.exit(1)
