@@ -1,0 +1,9 @@
+requests
+bs4
+asyncio
+aiohttp
+aiofiles
+tenacity
+aiohttp_socks
+tqdm
+tenacity
