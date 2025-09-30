@@ -60,6 +60,8 @@ This separation ensures the dataset is **broad and inclusive**, while evaluation
 
 ## Pseudo-algorithm 
 
+![Indic-MMLU pipeline overview](assets/indic-mmlu.png)
+
 ```
 For each language in target_languages:
   translated = translate(original_mmlu, tgt=language)
