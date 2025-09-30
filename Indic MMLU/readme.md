@@ -5,7 +5,7 @@
 This dataset was created by translating the CAIS/MMLU test dataset into various Indic languages. Enhancements were made using an open-source large language model (LLM) to improve translation quality.
 
 ## Steps Followed
-1. Take the original CAIS/MMLU test dataset.
+1. Take the original CAIS/MMLU test dataset(https://huggingface.co/datasets/cais/mmlu/viewer).
 2. Translate the dataset using a machine translation model (IndicTrans2).
 3. Enhance translations using an open-source LLM with specified instructions and concurrency.
 4. Generate embeddings for both the original English and Indic translated/enhanced versions.
