@@ -58,9 +58,19 @@ This separation ensures the dataset is **broad and inclusive**, while evaluation
 
 ---
 
-## Pseudo-algorithm 
+## Flowchart Representation of the Indic MMLU Pipeline
 
-![Indic-MMLU pipeline overview](assets/indic-mmlu.png)
+To complement the pseudo-code, the following flowchart provides a **visual overview of the Indic MMLU pipeline**. It clearly illustrates the step-by-step workflow, starting from the English MMLU dataset and moving through translation, enhancement, evaluation, and validation:
+
+* **Translation Stage:** The English MMLU instance is translated into Indic languages using specialist MT.
+* **Enhancement Stage:** Translations are refined with large-scale LLMs for improved fluency and alignment.
+* **Judging Phase:** Three types of evaluation are conducted — *fluency by native language experts, subject correctness by domain experts, and alignment by coherence judges*.
+* **Validation Stage:** Embedding similarity checks, n-gram metrics (BLEU, ROUGE, ChrF++), and discrepancy detection ensure quality.
+* **Final Output:** A validated Indic MMLU dataset instance ready for benchmarking.
+
+![Indic MMLU Pipeline](assets/indic-mmlu.png)
+
+# Pseudo-algorithm 
 
 ```
 For each language in target_languages:
@@ -72,6 +82,8 @@ For each language in target_languages:
   human_ratings = rate_sample(enhanced)
 Aggregate results, compute per-language model scores, produce visualizations
 ```
+
+This visual representation makes it easier to understand how the **algorithmic steps, human evaluation, and automated checks** come together to ensure translation quality and dataset reliability.
 
 ---
 
@@ -219,7 +231,7 @@ Workflow:
 * Work is ongoing to expand the evaluation to cover all 22 languages.
 
 ---
-### 📊 Indic MMLU Results 
+### Indic MMLU Results 
 
 | <div align="center">![Assamese](assets/assamese.png)<br/>*Assamese*</div> | <div align="center">![Bengali](assets/bengali.png)<br/>*Bengali*</div> |
 |---------------------------------------------------------------------------|------------------------------------------------------------------------|
