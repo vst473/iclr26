@@ -241,6 +241,45 @@ Traditional metrics are insufficient post-enhancement. Our framework includes:
 | InternVL3_5-GPT-OSS-20B-A4B-Preview-HF | 38.87      | 4.537      | 0.994          | 0.0029              | 195.85    | 240.2     | 0.919        | 0                 | 400      | 500      | 0.95        | 0.05             |
 
 
+
+<table>
+  <tr>
+    <td align="center"><img src="assets/assamese.png" width="170"/><br/>assamese</td>
+    <td align="center"><img src="assets/bengali.png" width="170"/><br/>bengali</td>
+    <td align="center"><img src="assets/bodo.png" width="170"/><br/>bodo</td>
+    <td align="center"><img src="assets/dogri.png" width="170"/><br/>dogri</td>
+    <td align="center"><img src="assets/english.png" width="170"/><br/>english</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/gujarati.png" width="170"/><br/>gujarati</td>
+    <td align="center"><img src="assets/hindi.png" width="170"/><br/>hindi</td>
+    <td align="center"><img src="assets/kannada.png" width="170"/><br/>kannada</td>
+    <td align="center"><img src="assets/kashmiri.png" width="170"/><br/>kashmiri</td>
+    <td align="center"><img src="assets/konkani.png" width="170"/><br/>konkani</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/maithili.png" width="170"/><br/>maithili</td>
+    <td align="center"><img src="assets/malayalam.png" width="170"/><br/>malayalam</td>
+    <td align="center"><img src="assets/manipuri.png" width="170"/><br/>manipuri</td>
+    <td align="center"><img src="assets/marathi.png" width="170"/><br/>marathi</td>
+    <td align="center"><img src="assets/nepali.png" width="170"/><br/>nepali</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/punjabi.png" width="170"/><br/>punjabi</td>
+    <td align="center"><img src="assets/sanskrit.png" width="170"/><br/>sanskrit</td>
+    <td align="center"><img src="assets/sindhi.png" width="170"/><br/>sindhi</td>
+    <td align="center"><img src="assets/tamil.png" width="170"/><br/>tamil</td>
+    <td align="center"><img src="assets/telugu.png" width="170"/><br/>telugu</td>
+  </tr>
+  <tr>
+    <td align="center"><img src="assets/urdu.png" width="170"/><br/>urdu</td>
+  </tr>
+</table>
+
+
+
+
+
 #### With Preprocessing and Postprocessing
 
 
