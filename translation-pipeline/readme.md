@@ -120,8 +120,31 @@ We use the following standard translation metrics:
 ### Pre-Enhancement Results
 
 *(Placeholder: Insert results table/plots for raw model outputs)*
+<details>
+  <summary>📊 Pre-Enhancement IN22</summary>
+
+  ![English to assamese](https://github.com/user-attachments/assets/0e31225c-1f7c-4c45-9623-fe606eab9ede)
+  ![English to Gujarati](https://github.com/user-attachments/assets/799c71b7-43ab-4446-a734-1b2db9541d8f)
+  ![English to Hindi](https://github.com/user-attachments/assets/89fd3e1d-16c1-4515-9ed4-241339f10c0f)
+  ![English to Kannada](https://github.com/user-attachments/assets/0bf1ecb8-b4f3-45f6-bdfa-befbdd3ddd6c)
+  ![English to Maithili](https://github.com/user-attachments/assets/fe878c6b-3fea-4cb0-9ef3-29ecff9ae831)
+  ![English to Urdu](https://github.com/user-attachments/assets/9c5af4d3-15fd-43c9-a18e-352a24dee42f)
+  ![English to Telugu](https://github.com/user-attachments/assets/dc879224-7459-48e8-b450-6472c353db5b)
+  ![English to Tamil](https://github.com/user-attachments/assets/e8e2881d-9aa8-41e5-9174-958dc08bc5f4)
+  ![English to Sanskrit](https://github.com/user-attachments/assets/011efd7f-6ea1-437b-a6e5-400781851208)
+  ![English to Panjabi](https://github.com/user-attachments/assets/7e9e4492-3474-439f-85e3-c8ef680048b0)
+  ![English to Oriya](https://github.com/user-attachments/assets/701582b0-0871-4221-bca0-590f2e9ab05c)
+  ![English to Nepali](https://github.com/user-attachments/assets/7684b2ca-da07-4d52-ac12-10039d65eddf)
+  ![English to Marathi](https://github.com/user-attachments/assets/112981f7-6d53-422b-aaf8-15ebef488152)
+  ![English to Malayalam](https://github.com/user-attachments/assets/dd799a53-b23b-4c4c-b3f0-8c98aa4c97e2)
+  ![English to Bengali](https://github.com/user-attachments/assets/ebc63608-5907-4f25-a160-bfaaffb7ba6b)
+  
+</details>
 
 ---
+
+
+
 
 ### Post-Enhancement Results
 
