@@ -241,6 +241,7 @@ Traditional metrics are insufficient post-enhancement. Our framework includes:
 | InternVL3_5-GPT-OSS-20B-A4B-Preview-HF | 38.87      | 4.537      | 0.994          | 0.0029              | 195.85    | 240.2     | 0.919        | 0                 | 400      | 500      | 0.95        | 0.05             |
 
 
+#### Word Error Rate (WER) Evaluation Across Languages
 
 <table>
   <tr>
