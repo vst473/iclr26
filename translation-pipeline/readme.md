@@ -119,7 +119,6 @@ We use the following standard translation metrics:
 
 ### Pre-Enhancement Results
 
-*(Placeholder: Insert results table/plots for raw model outputs)*
 <details>
   <summary>📊 Pre-Enhancement IN22</summary>
 
@@ -144,13 +143,61 @@ We use the following standard translation metrics:
 ---
 
 
+<details>
+  <summary>📊 Pre-Enhancement Flores</summary>
+
+  ![Flores English to Urdu](https://github.com/user-attachments/assets/ded32975-25f8-4f45-a76c-7a429ae1d69b)  
+  ![Flores English to Telugu](https://github.com/user-attachments/assets/8e7aeca2-7063-4d03-a305-90ffe09eadb1)  
+  ![Flores English to Tamil](https://github.com/user-attachments/assets/b3125f26-6755-41a6-9c84-b1fba09c3d45)  
+  ![Flores English to Sanskrit](https://github.com/user-attachments/assets/914d3208-cb74-4a94-a69e-231c762aed58)  
+  ![Flores English to Punjabi](https://github.com/user-attachments/assets/1ffd4cf2-5112-4560-8539-0fd5d67a47ed)  
+  ![Flores English to Oriya](https://github.com/user-attachments/assets/ac4a2327-d824-48db-be8f-555b8f9bbbd8)  
+  ![Flores English to Nepali](https://github.com/user-attachments/assets/39c2b325-7953-4965-9b2b-18c4531f17b1)  
+  ![Flores English to Malayalam](https://github.com/user-attachments/assets/76cd4da6-dfc5-4c4f-81c1-5e0692a72307)  
+  ![Flores English to Maithili](https://github.com/user-attachments/assets/c91bbbf8-36f0-4194-a0b9-1a26eaf4b4d4)  
+  ![Flores English to Kannada](https://github.com/user-attachments/assets/25dfb25a-724b-420f-9aa3-a49d50ce6d85)  
+  ![Flores English to Hindi](https://github.com/user-attachments/assets/c12b2ffc-924a-41b5-a37c-9d219085b9a1)  
+  ![Flores English to Gujarati](https://github.com/user-attachments/assets/42d46e3b-4706-4e8b-82bf-e277b3cd2297)  
+  ![Flores English to Bengali](https://github.com/user-attachments/assets/8d0362ce-71a6-4f53-bf09-127f5edaef23)  
+  ![Flores English to Bengali (1)](https://github.com/user-attachments/assets/1669b853-9870-408b-9c45-640ee4323c04)  
+  ![Flores English to Assamese](https://github.com/user-attachments/assets/272b668d-2330-4f70-b386-ff0161c7a95e)  
+
+</details>
+
+
+---
+
+
 
 
 ### Post-Enhancement Results
 
 *(Placeholder: Insert results table/plots after enhancement with Indic MMLU-strong LLMs)*
 
+<details>
+  <summary>📊 Enhanced IN22 — Indic Trans2 (Enhanced with LLMs)</summary>
+
+  ![Enhanced IN22 Indic Trans2 results using Qwen_Qwen3-Next-80B-A3B-Instruct](https://github.com/user-attachments/assets/c745042d-1b5f-4b03-bbce-803f7f4c2891)  
+  ![Enhanced IN22 Indic Trans2 results using Qwen_Qwen3-235B-A22B-Instruct-2507](https://github.com/user-attachments/assets/0248271c-942d-4689-a1d9-392d2ae159be)  
+  ![Enhanced IN22 Indic Trans2 results using moonshotai_Kimi-K2-Instruct](https://github.com/user-attachments/assets/d83b6a7c-4e81-4019-abc4-a71d4e292d29)  
+  ![Enhanced IN22 Indic Trans2 results using deepseek-ai_DeepSeek-V3-0324](https://github.com/user-attachments/assets/5b9525fa-c2d0-4b0a-bf34-13aaa5a8bafd)  
+
+</details>
+
 ---
+<details>
+  <summary>📊 Enhanced Flores — Indic Trans2 (Enhanced with LLMs)</summary>
+
+  ![Enhanced Flores Indic Trans2 results using Qwen_Qwen3-Next-80B-A3B-Instruct](https://github.com/user-attachments/assets/ade604c1-dd02-492f-ab1c-956a19ce7cd2)  
+  ![Enhanced Flores Indic Trans2 results using Qwen_Qwen3-235B-A22B-Instruct-2507](https://github.com/user-attachments/assets/26b5c058-7640-4e91-a09d-7392ff0cae89)  
+  ![Enhanced Flores Indic Trans2 results using moonshotai_Kimi-K2-Instruct](https://github.com/user-attachments/assets/9ee0f57d-86d2-40bf-8e30-ed92a399e0d9)  
+
+</details>
+
+
+
+
+
 
 ## Observations & Recommendations
 
