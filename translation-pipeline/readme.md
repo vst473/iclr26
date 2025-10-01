@@ -240,7 +240,7 @@ python3 llm_judge.py \
 
 *Baseline MT:*
 <details>
-  <summary>📊 [ai4bharat/IN22-Gen](https://huggingface.co/datasets/ai4bharat/IN22-Gen) </summary>
+  <summary>📊 ai4bharat/IN22-Gen Results </summary>
 
   ![English to assamese](https://github.com/user-attachments/assets/0e31225c-1f7c-4c45-9623-fe606eab9ede)
   ![English to Gujarati](https://github.com/user-attachments/assets/799c71b7-43ab-4446-a734-1b2db9541d8f)
@@ -263,7 +263,7 @@ python3 llm_judge.py \
 ---
 
 <details>
-  <summary>📊 [google/IndicGenBench_flores_in](https://huggingface.co/datasets/google/IndicGenBench_flores_in)</summary>
+  <summary>📊 google/IndicGenBench_flores_in Results </summary>
 
   ![Flores English to Urdu](https://github.com/user-attachments/assets/ded32975-25f8-4f45-a76c-7a429ae1d69b)  
   ![Flores English to Telugu](https://github.com/user-attachments/assets/8e7aeca2-7063-4d03-a305-90ffe09eadb1)  
@@ -287,7 +287,7 @@ python3 llm_judge.py \
 
 *Post Enhancements on MT:*
 <details>
-  <summary>📊 Enhanced IN22 — Indic Trans2 (Enhanced with LLMs)</summary>
+  <summary>📊 Enhanced ai4bharat/IN22-Gen — Indic Trans2 (Enhanced with LLMs)</summary>
 
   ![Enhanced IN22 Indic Trans2 results using Qwen_Qwen3-Next-80B-A3B-Instruct](https://github.com/user-attachments/assets/c745042d-1b5f-4b03-bbce-803f7f4c2891)  
   ![Enhanced IN22 Indic Trans2 results using Qwen_Qwen3-235B-A22B-Instruct-2507](https://github.com/user-attachments/assets/0248271c-942d-4689-a1d9-392d2ae159be)  
