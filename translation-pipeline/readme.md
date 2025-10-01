@@ -28,9 +28,19 @@ The goal is to:
 
 2. **Evaluate open-source MT models & LLMs**
 
-   * IndicTrans2
-   * NLLB (distilled & large variants)
-   * Open-source LLMs
+| Models | Models |
+|--------|--------|
+| moonshotai/Kimi-K2-Instruct | Qwen/Qwen3-8B |
+| Qwen/Qwen3-235B-A22B-Instruct-2507 | Qwen/Qwen3-0.6B |
+| Qwen/Qwen3-Next-80B-A3B-Instruct | Qwen/Qwen3-Next-80B-A3B-Thinking |
+| google/gemma-3-4b-it | openai/gpt-oss-20b |
+| google/gemma-3-27b-it | openai/gpt-oss-120b |
+| meta-llama/Llama-3.1-70B-Instruct | facebook/nllb-200-1.3B |
+| meta-llama/Llama-4-Maverick-17B-128E-Instruct | facebook/nllb-moe-54b |
+| meta-llama/Llama-4-Scout-17B-16E-Instruct | facebook/nllb-200-distilled-1.3B |
+| deepseek-ai/DeepSeek-V3.1 | facebook/nllb-200-3.3B |
+| deepseek-ai/DeepSeek-V3.1 Think | facebook/nllb-200-distilled-600M |
+| Qwen/Qwen3-235B-A22B-Thinking-2507 | zai-org/GLM-4.5 |
 
 3. **Enhancement Stage**
 
