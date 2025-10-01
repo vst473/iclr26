@@ -200,6 +200,7 @@ To evaluate translation quality systematically, we employed **LLMs as judges**, 
 
 | Language  | Avg Maths Rate | Avg Coherence Rate | Avg Linguist Rate | Total Records |
 |-----------|----------------|--------------------|-------------------|---------------|
+| Bengali	  | 9.182561	     | 9.131505	          | 8.202293	        | 14042         |
 | Nepali    | 9.473793       | 9.331505           | 8.402293          | 14042         |
 | Telugu    | 9.220837       | 8.975929           | 7.986256          | 14042         |
 | Oriya     | 9.264421       | 8.944096           | 8.220268          | 14042         |
