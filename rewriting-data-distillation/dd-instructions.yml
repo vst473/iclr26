@@ -1,0 +1,140 @@
+# 0 --> Indian Virtual Personas Domain of knowledge
+create_domain_questions: |
+  Craft a single, thought-provoking and mind-triggering question in {0} that inspires deep reflection and invites a broad exploration of ideas, perspectives, and reflections, particularly within the Indian context. Provide only the question strictly in English language, without any additional commentary or explanation.
+
+# 0 --> Virtual Indian Persona
+# 1 --> domain of knowledge of Persona
+# 2 --> Thought provoking question on Personas Domain of knowledge
+data_gen_personas: | 
+  You are {0} Your role is to engage with users based on your expertise. Stay within your domain and maintain the persona's tone and expertise.
+  # CONTEXT # 
+  The need for this dataset stems from the desire to uphold a standard of excellence in English language content within the {1} field. By compiling a diverse range of well-structured and authentic texts, this collection will help maintain a rich linguistic resource that supports clarity, readability, and contextual accuracy in various forms of communication. 
+  # OBJECTIVE # 
+  I want you to generate text paragraphs strictly in English language with 900+ words for {1} that is easy to read, flows naturally, and sounds like it was written by a human. Generated text data should mimic real world data so that it can be also used to improve research and innovation. Use clear transitions between sentences and paragraphs while maintaining a consistent narrative or argument ensuring a logical progression of thought. Ensure the Writing is Engaging & Not Mechanically Repetitive. Question: {2}
+  # STYLE # 
+  Follow the simple writing style common in communications. Be persuasive yet maintain a neutral tone. Avoid sounding too much like a sales or marketing pitch. # AUDIENCE # The primary audience is of Indian origin, so content should incorporate cultural familiarity, societal norms, and linguistic nuances relevant to Indian readers. 
+  # RESPONSE # 
+  Generate a well-structured and engaging piece of content adhering to the above parameters. The writing should feel natural, contextually appropriate, and resonate with the target audience.
+
+
+# 0 --> Indian Agriculture related Personas
+# 1 --> Personas domain of knowledge
+# 2 --> Taxonomy topic/domain
+agri_sft_gen: | 
+  ## Context ##
+  You are {0}, a subject matter expert in the domain of {1}. You are tasked with using your expertise to generate meaningful question-and-answer pairs that reflect deep, accurate knowledge of this domain.
+
+  ## Objective ##
+  Create 2 high-quality question-and-answer pairs related to the given topic. Each question must be fully self-contained and understandable on its own, without any reference to a passage, article, or prior text. Each answer should be detailed, factually correct, and may include light elaboration or context to aid understanding.
+
+  ## Style & Tone ##
+  Use clear, formal, and neutral academic language. Avoid opinions, subjective judgments, or speculative content. Keep the phrasing precise and informative, as would be suitable for educational or research purposes.
+
+  ## Audience ##
+  These Q&A pairs are intended for learners, researchers, or AI systems needing precise, decontextualized understanding of concepts within the given domain.
+
+  ## Input ##
+  Domain: {2}
+
+  ## Instructions ##
+  - Do not include references to any text, passage, or reading material.
+  - Do not generate meta-level questions like "What is the importance of X?" or "What is the main idea of Y?"
+  - Avoid using terms like "this passage" or directly quoting any source.
+  - Focus on generating informative questions that explore facts, definitions, relationships, processes, mechanisms, or key distinctions.
+  - Each Q&A pair must be meaningful and self-contained, even when separated from the original domain context.
+  - Keep all content precise, formal, and grounded in domain expertise.
+
+  ## Response Format ##
+  Return a JSON array where each object includes:
+  - "question": A complete, well-structured question that stands on its own and draws on the personas domain knowledge in given topic or field.
+  - "answer": A medium-length (2–3 sentence) answer that directly addresses the question with factual accuracy and may include brief, non-factual clarification if helpful.
+
+  ## Output Only in the Following Format ##
+  [
+    {{
+      "question": "",
+      "answer": ""
+    }},
+    {{
+      "question": "",
+      "answer": ""
+    }}
+  ]
+
+finance_qna_gen:: | 
+  ## Context ##
+  You are {0}, a subject matter expert in the domain of {1}. You are tasked with using your expertise to generate meaningful question-and-answer pairs that reflect deep, accurate knowledge of this domain.
+
+  ## Objective ##
+  Create 3-4 high-quality question-and-long-answer(at least 2 sentences) pairs related to the given topic. Each question must be fully self-contained and understandable on its own, without any reference to a passage, article, or prior text. Each answer should be 2–3 sentences long, factually correct, and may include light elaboration or context to aid understanding.
+
+  ## Style & Tone ##
+  Use clear, formal, and neutral academic language. Avoid opinions, subjective judgments, or speculative content. Keep the phrasing precise and informative, as would be suitable for educational or research purposes.
+
+  ## Audience ##
+  These Q&A pairs are intended for learners, researchers, or AI systems needing precise, decontextualized understanding of concepts within the given domain.
+
+  ## Input ##
+  Domain: {3}
+
+  ## Instructions ##
+  - Do not include references to any text, passage, or reading material.
+  - Do not generate meta-level questions like "What is the importance of X?" or "What is the main idea of Y?"
+  - Avoid using terms like "this passage" or directly quoting any source.
+  - Focus on generating informative questions that explore facts, definitions, relationships, processes, mechanisms, or key distinctions.
+  - Each Q&A pair must be meaningful and self-contained, even when separated from the original domain context.
+  - Keep all content precise, formal, and grounded in domain expertise.
+
+  ## Response Format ##
+  Return a JSON array where each object includes:
+  - "question": A complete, well-structured question that stands on its own and draws on the personas domain knowledge in given topic or field.
+  - "answer": A medium-length (2–3 sentences) answer that directly addresses the question with factual accuracy and may include brief, non-factual clarification if helpful.
+
+  ## Output Only in the Following Format ##
+  [
+    {{
+      "question": "",
+      "answer": ""
+    }},
+    {{
+      "question": "",
+      "answer": ""
+    }}
+  ]
+
+syn_benchmark: |
+  ## Context ##
+  The MMLU benchmark dataset is a  massive multitask test consisting of multiple-choice questions from various branches of knowledge. The test spans subjects in the humanities, social sciences, hard sciences, and other areas that are important for some people to learn. This covers 57 tasks including elementary mathematics, history, computer science, law, and more. To attain high accuracy on this test, models must possess extensive world knowledge and problem solving ability. Topics mainly are Life Science, Physical Science, Earth and Space Science, Scientific Practices.
+
+  ## Objective ##
+  Your task is to generate SFT style dataset having 4–5 question-answer pairs which are specifically {0} question-answer pairs, similar in format to the {1} based on provided domain. These questions must focus on India-specific contexts—past or present—and be useful for benchmarking an LLM's answering ability using Indian knowledge.
+
+  ## Domain ##
+  Domain of Knowledge: {2}
+
+  ## Style Guidelines ##
+  Question: Follow the same format and structure as questions in the {1}.
+  Answer: Provide the correct answer option exactly as styled in {1}.
+  label: Give a one broad domain based on which category of the question is out of following:
+
+  ['Adult', 'Arts_and_Entertainment', 'Autos_and_Vehicles', 'Beauty_and_Fitness', 'Books_and_Literature', 'Business_and_Industrial', 'Computers_and_Electronics', 'Finance', 'Food_and_Drink', 'Games', 'Health', 'Hobbies_and_Leisure', 'Home_and_Garden', 'Internet_and_Telecom', 'Jobs_and_Education', 'Law_and_Government', 'News', 'Online_Communities', 'People_and_Society', 'Pets_and_Animals', 'Real_Estate', 'Science', 'Sensitive_Subjects', 'Shopping', 'Sports', 'Travel_and_Transportation']
+
+  ## Instructions ##
+  Generate exactly 4–5 multiple-choice question-answer pairs with 2 being easier, 2 being medium and one hard question.
+  Ensure each question focuses on topics relevant to India, based on the given domain.
+  Questions or answers should be standalone, avoid giving references which are not in question or answer.
+  Follow simple reading/sounding English that is commonly found in twitter or reddit threads.
+  Output must exactly follow format given in example.
+
+  ## Example ##
+  [
+    {{'question': 'What does "Svetambara" mean?\nOption A. "Sky-clad"\nOption B. "Naked"\nOption C. "White-clad"\nOption D. "Clothed"', 'answer': ['C', 'Option C', 'Option C. "White-clad"'], 'label': 'People_and_Society'}},
+    {{'question': 'When was the major shift by Greek philosophers who rejected the anthropomorphic view of the divine?\nOption A. Early Third Century BCE\nOption B. Second and First Century BCE\nOption C. Late Sixth Century BCE\nOption D. Fourth and Third Century BCE', 'answer': ['C', 'Option C', 'Option C. Late Sixth Century BCE'], 'label': 'People_and_Society'}},
+    ..
+  ]
+  ## Output Format ##
+  [
+    {{"question": "" , "answer": "", label: ""}},
+    {{"question": "" , "answer": "", label: ""}},
+    ...
+  ]
