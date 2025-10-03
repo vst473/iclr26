@@ -7,7 +7,7 @@ mode="$3"
 echo "running for $model_path saving it to $output_path in $mode with "
 
 export HF_DATASETS_CACHE="$HOME/.cache/huggingface/"
-export OPENAI_API_KEY="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"
+export OPENAI_API_KEY=""
 export VLLM_WORKER_MULTIPROC_METHOD=spawn
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
 TASKS=("mmlu_custom")
